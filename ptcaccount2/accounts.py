@@ -16,6 +16,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
 
 from ptcaccount2.ptcexceptions import *
+from ptcaccount2.emailactivation import *
 
 BASE_URL = "https://club.pokemon.com/us/pokemon-trainer-club"
 
