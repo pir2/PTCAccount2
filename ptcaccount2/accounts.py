@@ -230,7 +230,7 @@ def random_account(username=None, password=None, email=None, birthday=None):
             else:
                 raise
 
-    emailactivation.ActivateEmail(username)
+    ActivateEmail(username)
 
     return {
         "username": try_username,
