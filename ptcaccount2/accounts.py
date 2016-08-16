@@ -222,6 +222,8 @@ def random_account(username=None, password=None, email=None, birthday=None):
             else:
                 raise
 
+    ActivateEmail(username)
+
     return {
         "username": try_username,
         "password": password,
