@@ -29,6 +29,7 @@ SUCCESS_URLS = (
 DUPE_EMAIL_URL = 'https://club.pokemon.com/us/pokemon-trainer-club/forgot-password?msg=users.email.exists'
 BAD_DATA_URL = 'https://club.pokemon.com/us/pokemon-trainer-club/parents/sign-up'
 
+EMAIL_DOMAINS = ['inbucket.org','inbucket.com','inbucket.net']
 
 def _random_string(length=15):
     return ''.join([random.choice(string.ascii_letters + string.digits) for _ in range(length)])
@@ -41,6 +42,11 @@ def _random_email(local_length=10, sub_domain_length=5, top_domain=".com"):
         top_domain=top_domain
     )
 
+def _random_inbucket_email(username, domain):
+    return "{local}@{domain}".format(
+        local=username,
+        domain=domain
+    )
 
 def _random_birthday():
     """
@@ -201,7 +207,8 @@ def _validate_response(driver):
 def random_account(username=None, password=None, email=None, birthday=None):
     try_username = _random_string() if username is None else str(username)
     password = _random_string() if password is None else str(password)
-    try_email = _random_email() if email is None else str(email)
+    #try_email = _random_email() if email is None else str(email)
+    try_email = _random_inbucket_email(try_username,EMAIL_DOMAINS[random.randint(1,len(EMAIL_DOMAINS))-1])
     try_birthday = _random_birthday() if birthday is None else str(birthday)
 
     if birthday is not None:
