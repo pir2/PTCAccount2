@@ -6,7 +6,7 @@ import json
 import urllib2
 import re
 
-def ActivateEmail(username)
+def ActivateEmail(username):
   #Personal inbucket.org email server
   url = "http://inbucket.org//api/v1/mailbox/"+username
   
