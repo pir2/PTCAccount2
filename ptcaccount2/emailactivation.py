@@ -28,7 +28,7 @@ def ActivateEmail(username):
   	print 'Checked email ' + count + ' time(s)'
   
   #assign the emailid
-  emailid = json[0]["id"]
+  emailid = mailbox[0]["id"]
   
   #get the email content
   emailURL = url + "/" + emailid + "/source"
