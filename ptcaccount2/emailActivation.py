@@ -1,7 +1,5 @@
 import requests
 import io
-#from tempmail import TempMail #pip install temp-mail
-from bs4 import BeautifulSoup
 import time
 import os
 import json
