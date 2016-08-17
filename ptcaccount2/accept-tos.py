@@ -13,7 +13,7 @@ import threading
 
 def accept_tos(username, password):
 	api = PGoApi()
-	api.set_position(40.7127837, -74.005941, 0.0)
+	api.set_position(43.6427431,-79.3762986, 21)
 	api.login('ptc', username, password)
 	time.sleep(2)
 	req = api.create_request()
