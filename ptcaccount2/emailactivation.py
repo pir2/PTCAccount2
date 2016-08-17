@@ -25,7 +25,7 @@ def ActivateEmail(username):
   	mailbox = json.loads(f.read())
   	count+=1
   	time.sleep(1)
-  	print 'Checked email ' + count + ' time(s)'
+  	print 'Checked email {} time(s)'.format(count) 
   
   #assign the emailid
   emailid = mailbox[0]["id"]
