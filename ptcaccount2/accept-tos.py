@@ -25,4 +25,4 @@ def accept_tos(username, password):
 	print('Claimed username: {}'.format(username))
 	#print('Response dictionary: \r\n{}'.format(pprint.PrettyPrinter(indent=4).pformat(response)))
 
-accept_tos('username', 'password')
+#accept_tos('username', 'password')
