@@ -8,7 +8,7 @@ import re
 
 def ActivateEmail(username):
   #Personal inbucket.org email server
-  url = "http://inbucket.org//api/v1/mailbox/"+username
+  url = "http://inbucket.org//api/v1/mailbox/{}".format(username)
   
   #Create request to grab mailbox
   req = urllib2.Request(url)
@@ -31,7 +31,7 @@ def ActivateEmail(username):
   emailid = mailbox[0]["id"]
   
   #get the email content
-  emailURL = url + "/" + emailid + "/source"
+  emailURL = url + "/{}/source".format(emailid)
   emailreq = urllib2.Request(emailURL)
   emailopen = opener.open(emailreq)
   emailcontent = emailopen.read()
