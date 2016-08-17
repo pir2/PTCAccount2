@@ -20,6 +20,9 @@ def accept_tos(username, password):
 	req.mark_tutorial_complete(tutorials_completed = 0, send_marketing_emails = False, send_push_notifications = False)
 	response = req.call()
 	print('Accepted Terms of Service for {}'.format(username))
+	req.claim_codename(codename = username)
+	response = req.call()
+	print('Claimed username: {}'.format(username))
 	#print('Response dictionary: \r\n{}'.format(pprint.PrettyPrinter(indent=4).pformat(response)))
 
 accept_tos('username', 'password')
