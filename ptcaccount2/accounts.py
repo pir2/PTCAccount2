@@ -34,7 +34,7 @@ BAD_DATA_URL = 'https://club.pokemon.com/us/pokemon-trainer-club/parents/sign-up
 EMAIL_DOMAINS = ['inbucket.org','inbucket.com','inbucket.net']
 
 def _random_string(length=15):
-    return ''.join([random.choice(string.ascii_letters + string.digits) for _ in range(length)])
+    return ''.join([random.choice(string.letters + string.digits) for _ in range(length)])
 
 
 def _random_email(local_length=10, sub_domain_length=5, top_domain=".com"):
