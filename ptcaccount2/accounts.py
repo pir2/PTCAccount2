@@ -17,6 +17,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 from ptcaccount2.ptcexceptions import *
 from ptcaccount2.emailactivation import *
+from ptcaccount2.accept-tos import *
 
 BASE_URL = "https://club.pokemon.com/us/pokemon-trainer-club"
 
@@ -230,7 +231,12 @@ def random_account(username=None, password=None, email=None, birthday=None):
             else:
                 raise
 
+    print 'Trying to accept email activation for: ' + try_username
     ActivateEmail(try_username)
+
+    print 'Trying to accept in game ToS and trainer name'
+    
+    accept_tos(try_username, password)
 
     return {
         "username": try_username,
