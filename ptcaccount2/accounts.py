@@ -18,7 +18,7 @@ from selenium.common.exceptions import TimeoutException
 
 from ptcaccount2.ptcexceptions import *
 from ptcaccount2.emailactivation import *
-from ptcaccount2.accept-tos import *
+from ptcaccount2.accepttos import *
 from ptcaccount2.utils import *
 
 BASE_URL = "https://club.pokemon.com/us/pokemon-trainer-club"
