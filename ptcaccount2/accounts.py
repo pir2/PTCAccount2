@@ -14,10 +14,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import TimeoutException
 
 from ptcaccount2.ptcexceptions import *
 from ptcaccount2.emailactivation import *
 from ptcaccount2.accept-tos import *
+from ptcaccount2.utils import *
 
 BASE_URL = "https://club.pokemon.com/us/pokemon-trainer-club"
 
@@ -170,8 +172,15 @@ def create_account(username, password, email, birthday):
     elem = driver.find_element_by_class_name("g-recaptcha")
     driver.execute_script("arguments[0].scrollIntoView(true);", elem)
 
-    # Waits 1 minute for you to input captcha
-    WebDriverWait(driver, 60).until(EC.text_to_be_present_in_element_value((By.ID, "g-recaptcha-response"), ""))
+    # Waits for you to input captcha
+    wait_time_in_sec = 600
+    try:
+        WebDriverWait(driver, wait_time_in_sec).until(EC.text_to_be_present_in_element_value((By.ID, "g-recaptcha-response"), ""))
+    except TimeoutException:
+        driver.quit()
+        print("Captcha was not entered within %s seconds." % wait_time_in_sec)
+        return False  # NOTE: THIS CAUSES create_account TO RUN AGAIN WITH THE EXACT SAME PARAMETERS
+        
     print("Captcha successful. Sleeping for 1 second...")
     time.sleep(1)
 
@@ -187,7 +196,7 @@ def create_account(username, password, email, birthday):
         raise
 
     print("Account successfully created.")
-    driver.close()
+    driver.quit()
     return True
 
 
@@ -206,20 +215,36 @@ def _validate_response(driver):
         raise PTCException("Generic failure. User was not created.")
 
 
-def random_account(username=None, password=None, email=None, birthday=None):
+def random_account(username=None, password=None, email=None, birthday=None, email_tag=False):
     try_username = _random_string() if username is None else str(username)
     password = _random_string() if password is None else str(password)
     #try_email = _random_email() if email is None else str(email)
     try_email = _random_inbucket_email(try_username,EMAIL_DOMAINS[random.randint(1,len(EMAIL_DOMAINS))-1])
     try_birthday = _random_birthday() if birthday is None else str(birthday)
 
+    # Max char length of email is 75
+    try:
+        assert len(try_email) <= 75
+        if len(try_email) > 73 and email_tag:
+            # No space for email_tag!
+            raise AssertionError
+
+    except AssertionError:
+        raise PTCInvalidNameException("Email is too long!")
+
     if birthday is not None:
         _validate_birthday(try_birthday)
 
     account_created = False
     while not account_created:
+        # Add tag in loop so that it updates if email or username changes
+        if email_tag:
+            use_email = tag_email(try_email, try_username)
+        else:  # Prevents adding tags to already tagged email
+            use_email = try_email
+
         try:
-            account_created = create_account(try_username, password, try_email, try_birthday)
+            account_created = create_account(try_username, password, use_email, try_birthday)
         except PTCInvalidNameException:
             if username is None:
                 try_username = _random_string()
