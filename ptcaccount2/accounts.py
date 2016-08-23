@@ -122,7 +122,7 @@ def create_account(username, password, email, birthday):
     if password is not None:
         _validate_password(password)
 
-    print("Attempting to create user {user}:{pw}. Opening browser...".format(user=username, pw=password))
+    print("Attempting to create user {user}:{pw}:{em}. Opening browser...".format(user=username, pw=password, em=email))
     driver = webdriver.Chrome()
     driver.set_window_size(600, 600)
 
