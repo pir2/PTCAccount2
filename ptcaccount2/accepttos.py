@@ -34,6 +34,7 @@ def accept_tos(username, password):
 	response = req.call()
 	print('Claimed username: {}'.format(username))
         time.sleep(2)
+        chosenpokemon = random.choice(STARTER_POKEMON)
         req.encounter_tutorial_complete(pokemon_id=chosenpokemon)
         response = req.call()
         print('Chose {} as starter pokemon'.format(chosenpokemon))
